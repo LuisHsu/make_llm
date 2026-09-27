@@ -1,0 +1,13 @@
+.venv/
+data/
+checkpoints/
+*.pt
+*.safetensors
+*.bin
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+.pytest_cache
+output.png
+build*/
+compile_commands.json
