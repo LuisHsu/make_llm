@@ -36,10 +36,11 @@ uv run python 00_env/check_env.py        # 環境檢查，最後要印出「全�
 |---|---|---|
 | `00_env/` | 環境準備 | （不用寫，跑 `check_env.py`） |
 | `01_micrograd/` | 自動微分與反向傳播 | `engine.py`、`nn.py`；C++ 版（選做）見 `01_micrograd/cpp/README.md` |
-| `02_makemore/` | 語言模型基礎：bigram、MLP | `bigram.py`、`mlp.py` |
+| `02_makemore/` | 語言模型基礎：bigram、MLP、深層 MLP 與 BatchNorm、手推 backprop、WaveNet 風格模型 | `bigram.py`、`mlp.py`、`deep_mlp.py`、`backprop_ninja.py`、`wavenet.py` |
+| `03_gpt/` | Transformer 與 GPT：資料與 bigram baseline、self-attention head、Transformer block、小 GPT | `char_data.py`、`bigram_lm.py`、`attention.py`、`single_head_lm.py`、`gpt.py` |
 
-後面的階段（Transformer、Tokenizer、GPT-2、現代架構、post-training、專用 LLM）列在 `CLAUDE.md` 的學習計畫，
-資料夾還沒建立。
+階段 3 目前到第 3 段（小 GPT）；第 4 段與後面的階段（Tokenizer、GPT-2、現代架構、post-training、專用 LLM）列在
+`CLAUDE.md` 的學習計畫，資料夾還沒建立。
 
 ## 跑測試
 
@@ -50,14 +51,17 @@ uv run pytest 01_micrograd
 uv run pytest 02_makemore/test_bigram.py
 uv run pytest 02_makemore/test_mlp.py
 uv run pytest 02_makemore/test_mlp.py --run-train -k train_mlp -s   # 會實際訓練模型，預設跳過
+uv run pytest 02_makemore/test_deep_mlp.py                          # 階段 2 第 3 段；第 4、5 段是 test_backprop_ninja.py、test_wavenet.py
+uv run pytest 03_gpt/test_char_data.py                              # 階段 3 第 1 段；其餘見 03_gpt/README.md
 ```
 
 還沒寫實作時，測試會因為 `ModuleNotFoundError` 無法收集，這是正常的。各階段 README 有說明怎麼只跑已寫好的部分。
 
-階段 2 的資料（`names.txt`，約 230KB）不在 repo 裡，第一次用之前先下載：
+階段 2、3 的資料（`names.txt` 約 230KB、tiny shakespeare 約 1.1MB）不在 repo 裡，第一次用之前先下載：
 
 ```bash
 uv run python 02_makemore/names_data.py
+uv run python 03_gpt/shakespeare_data.py
 ```
 
 ## 搭配 Claude Code 使用
